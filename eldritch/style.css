@@ -12,6 +12,8 @@ body{
     background-repeat: no-repeat;
     background-size: cover;
     margin: 0 auto;
+    max-width: 1440px;
+    max-height: 100vh;
 
 
     font-family: 'Amatic SC', cursive;
@@ -35,18 +37,22 @@ body{
 
 .azathoth{
     background-image: url(./assets/Ancients/Azathoth.png);
+    border-radius: 17px;
 }
 
 .cthulthu{
     background-image: url(./assets/Ancients/Cthulthu.png);
+    border-radius: 17px;
 }
 
 .iogSothoth{
     background-image: url(./assets/Ancients/IogSothoth.png);
+    border-radius: 17px;
 }
 
 .shubniggurath{
     background-image: url(./assets/Ancients/ShubNiggurath.png);
+    border-radius: 17px;
 }
 
 .img{
@@ -63,18 +69,19 @@ body{
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-    min-width: 33%;
+    min-width: 20%;
     height: 100vh;
     visibility: hidden;
 }
 
 .difficulty{
     border: 2px solid;
-    width: 100px;
+    width: 200px;
     text-align: center;
-    padding: 5px;
+    padding: 10px;
     margin: 10px;
     cursor: pointer;
+    background: linear-gradient(rgb(0, 0, 0), rgba(88, 13, 25, 0.616))
 }
 .difficulty:hover{
     opacity: .5;
@@ -92,9 +99,15 @@ body{
 }
 
 .shuffle{
+    width: 200px;
+    text-align: center;
+    padding: 10px;
+    margin: 10px;
+    font-weight: 700;
     border: 2px solid; 
     cursor: pointer;
     visibility: hidden;
+    background: linear-gradient(rgba(88, 13, 25, 0.616), rgb(0, 0, 0))
 }
 .shuffle:hover{
     opacity: .5;
@@ -115,7 +128,6 @@ body{
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    
 }
 
 .stage-container{
@@ -128,6 +140,8 @@ body{
 .stage-text{
     font-size: 25px;
     line-height: normal;
+    font-weight: 600;
+    letter-spacing: 2px;
 }
 
 .text-active{
@@ -172,6 +186,7 @@ body{
     width: 130px;
     height: 190px;
     cursor: pointer;
+    border-radius: 17px;
 }
 
 .deck:hover{
@@ -183,6 +198,7 @@ body{
     height: 190px;
     background-repeat: no-repeat;
     background-size: cover;
+    border-radius: 17px;
 }
 
 .active-visible{
