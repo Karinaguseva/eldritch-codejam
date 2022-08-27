@@ -41,6 +41,8 @@ document.addEventListener('click', (event) =>{
         stageText[0].classList.remove('text-active')
         stageText[1].classList.remove('text-active')
         stageText[2].classList.remove('text-active')
+        lastСard.style.backgroundImage = `none`;
+        thirdWraper.classList.remove('active-visible')
         importDataCard() 
         work()
         
@@ -51,6 +53,8 @@ document.addEventListener('click', (event) =>{
         stageText[0].classList.remove('text-active')
         stageText[1].classList.remove('text-active')
         stageText[2].classList.remove('text-active')
+        lastСard.style.backgroundImage = `none`;
+        thirdWraper.classList.remove('active-visible')
         importDataCard() 
         work2()
       }
