@@ -55,12 +55,16 @@ body{
     border-radius: 17px;
 }
 
-.img{
+.ancient{
     width: 200px;
     height: 260px;
     background-repeat: no-repeat;
     background-size: cover;
     cursor: pointer;
+}
+
+.ancient:hover{
+    opacity: .5;
 }
 
 .second-wrapper{
@@ -146,6 +150,10 @@ body{
 
 .text-active{
     color: #027008;
+}
+
+.text-active-red{
+    color: #ff0000;
 }
 
 .dots-container{

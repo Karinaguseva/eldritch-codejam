@@ -19,294 +19,47 @@ const deck = document.querySelector('.deck')
 const lastСard = document.querySelector('.last-card')
 const stageText = document.querySelectorAll('.stage-text')
 
+let greenCardsDataArr
+let brownCardsDataArr
+let blueCardsDataArr
+
 let wichFirstCard
 let levelRange
 let nameAncient
-let isFunctionWork = false
-let levelChange = false
+
+function importDataCard() {
+    greenCardsDataArr = Object.values(cardsDataGreen);
+    brownCardsDataArr = Object.values(cardsDataBrown);
+    blueCardsDataArr = Object.values(cardsDataBlue);
+}
+
 document.addEventListener('click', (event) =>{
-    if (event.target.classList.contains('azathoth')){
-        wichFirstCard = 0
-        nameAncient = 'azathoth'
-        difficultyWrapper.classList.add('active-visible')
-        if(isFunctionWork === true){if(!alert('Выберите карту древнего заново!')){window.location.reload();}}
+    if (event.target.classList.contains('ancient')){
+        nameAncient = event.target.dataset.ancientname
+        difficultyWrapper.classList.add('active-visible');
+        wichFirstCard = event.target.dataset.ancientlvl;
+        stageText[0].classList.remove('text-active')
+        stageText[1].classList.remove('text-active')
+        stageText[2].classList.remove('text-active')
+        importDataCard() 
         work()
+        
     }
-    if (event.target.classList.contains('cthulthu')){
-        wichFirstCard = 1
-        nameAncient = 'cthulthu'
-        difficultyWrapper.classList.add('active-visible')
-        if(isFunctionWork === true){if(!alert('Выберите карту древнего заново!')){window.location.reload();}}
-        work()
-    }
-    if (event.target.classList.contains('iogSothoth')){
-        wichFirstCard = 2
-        nameAncient = 'iogSothoth'
-        difficultyWrapper.classList.add('active-visible')
-        if(isFunctionWork === true){if(!alert('Выберите карту древнего заново!')){window.location.reload();}}
-        work()
-    }
-    if (event.target.classList.contains('shubniggurath')){
-        wichFirstCard = 3
-        nameAncient = 'shubniggurath'
-        difficultyWrapper.classList.add('active-visible')
-        if(isFunctionWork === true){if(!alert('Выберите карту древнего заново!')){window.location.reload();}}
-        work()
-    }
+    if (event.target.classList.contains('difficulty')){
+        shuffle.classList.add('active-visible')
+        levelRange = event.target.dataset.levelrange
+        stageText[0].classList.remove('text-active')
+        stageText[1].classList.remove('text-active')
+        stageText[2].classList.remove('text-active')
+        importDataCard() 
+        work2()
+      }
+      
 })
 
 function work(){
-isFunctionWork = true  
-console.log(`Ancient: ${nameAncient}`)
-document.addEventListener('click', (event) =>{
-    if (event.target.classList.contains('very-easy')){
-        shuffle.classList.add('active-visible')
-        levelRange = 'very-easy'
-        if(levelChange === true){if(!alert('Выберите карту древнего заново!')){window.location.reload();}}
-        work2()
-    }
-    if (event.target.classList.contains('easy')){
-        shuffle.classList.add('active-visible')
-        levelRange = 'easy'
-        if(levelChange === true){if(!alert('Выберите карту древнего заново!')){window.location.reload();}}
-        work2()
-    }
-    if (event.target.classList.contains('normal')){
-        shuffle.classList.add('active-visible')
-        levelRange = 'normal'
-        if(levelChange === true){if(!alert('Выберите карту древнего заново!')){window.location.reload();}}
-        work2()
-    }
-    if (event.target.classList.contains('hard')){
-        shuffle.classList.add('active-visible')
-        levelRange = 'hard'
-        if(levelChange === true){if(!alert('Выберите карту древнего заново!')){window.location.reload();}}
-        work2()
-    }
-    if (event.target.classList.contains('very-hard')){
-        shuffle.classList.add('active-visible')
-        levelRange = 'very-hard'
-        if(levelChange === true){if(!alert('Выберите карту древнего заново!')){window.location.reload();}}
-        work2()
-    }
-})
+    console.log(`Ancient: ${nameAncient}`)
 }
-
-function work2(){
-levelChange = true
-console.log(`Level: ${levelRange}`)
-
-let veryEasyGreenCards 
-let veryEasyBrownCards
-let veryEasyBlueCards
-
-let greenNormal
-let browmNormal
-let blueNormal
-
-let normalGreenOnly
-let normalBrounOnly
-let normalBlueOnly
-
-let newCountOfNormalGreen
-let newCountOfNormalBrown
-let newCountOfNormalBlue
-
-let VeryEasyGreenArray
-let VeryEasyBrownArray
-let VeryEasyBlueArray
-
-if (levelRange == 'very-easy'){
-veryEasyGreenCards =  cardsDataGreen.filter(function(level) {
-    return level.difficulty == 'easy';
-});
-veryEasyBrownCards =  cardsDataBrown.filter(function(level) {
-    return level.difficulty == 'easy';
-});
-veryEasyBlueCards =  cardsDataBlue.filter(function(level) {
-    return level.difficulty == 'easy';
-});
-
-let countGreenCards = (ancientsData[wichFirstCard].firstStage.greenCards + ancientsData[wichFirstCard].secondStage.greenCards + ancientsData[wichFirstCard].thirdStage.greenCards)
-let countBrownCards = (ancientsData[wichFirstCard].firstStage.brownCards + ancientsData[wichFirstCard].secondStage.brownCards + ancientsData[wichFirstCard].thirdStage.brownCards)
-let countBlueCards = (ancientsData[wichFirstCard].firstStage.blueCards + ancientsData[wichFirstCard].secondStage.blueCards + ancientsData[wichFirstCard].thirdStage.blueCards)
-
-function countNormalCards(){
-greenNormal = countGreenCards - veryEasyGreenCards.length
-browmNormal = countBrownCards - veryEasyBrownCards.length
-blueNormal = countBlueCards - veryEasyBlueCards.length
-}
-countNormalCards()
-
-if(greenNormal > 0){
-normalGreenOnly =  cardsDataGreen.filter(function(level) {
-    return level.difficulty !== 'easy' && level.difficulty !== 'hard';
-});
-}
-if(browmNormal > 0){
-normalBrounOnly =  cardsDataBrown.filter(function(level) {
-    return level.difficulty !== 'easy' && level.difficulty !== 'hard';
-});
-}
-if(blueNormal > 0){
-normalBlueOnly =  cardsDataBlue.filter(function(level) {
-    return level.difficulty !== 'easy' && level.difficulty !== 'hard';
-});
-}
-newCountOfNormalGreen = getRandomCards(normalGreenOnly,greenNormal)
-newCountOfNormalBrown = getRandomCards(normalBrounOnly,browmNormal)
-newCountOfNormalBlue = getRandomCards(normalBlueOnly,blueNormal)
-
-VeryEasyGreenArray = veryEasyGreenCards.concat(newCountOfNormalGreen);
-VeryEasyBrownArray = veryEasyBrownCards.concat(newCountOfNormalBrown);
-VeryEasyBlueArray = veryEasyBlueCards.concat(newCountOfNormalBlue);
-}
-
-let easyGreenCards
-let easyBrownCards
-let easyBlueCards
-if (levelRange == 'easy'){
-    easyGreenCards =  cardsDataGreen.filter(function(level) {
-        return level.difficulty !== 'hard';
-    });
-    easyBrownCards =  cardsDataBrown.filter(function(level) {
-        return level.difficulty !== 'hard';
-    });
-    easyBlueCards =  cardsDataBlue.filter(function(level) {
-        return level.difficulty !== 'hard';
-    });
-}
-let hardGreenCards
-let hardBrownCards
-let hardBlueCards
-if (levelRange == 'hard'){
-hardGreenCards =  cardsDataGreen.filter(function(level) {
-    return level.difficulty !== 'easy';
-});
-hardBrownCards =  cardsDataBrown.filter(function(level) {
-    return level.difficulty !== 'easy';
-});
-hardBlueCards =  cardsDataBlue.filter(function(level) {
-    return level.difficulty !== 'easy';
-});
-}
-
-let veryHardGreenCards
-let veryHardBrownCards
-let veryHardBlueCards
-
-let VeryHardGreenArray
-let VeryHardBrownArray
-let VeryHardBlueArray
-
-if (levelRange == 'very-hard'){
-
-veryHardGreenCards =  cardsDataGreen.filter(function(level) {
-    return level.difficulty == 'hard';
-});
-veryHardBrownCards =  cardsDataBrown.filter(function(level) {
-    return level.difficulty == 'hard';
-});
-veryHardBlueCards =  cardsDataBlue.filter(function(level) {
-    return level.difficulty == 'hard';
-});
-
-let countGreenCards = (ancientsData[wichFirstCard].firstStage.greenCards + ancientsData[wichFirstCard].secondStage.greenCards + ancientsData[wichFirstCard].thirdStage.greenCards)
-let countBrownCards = (ancientsData[wichFirstCard].firstStage.brownCards + ancientsData[wichFirstCard].secondStage.brownCards + ancientsData[wichFirstCard].thirdStage.brownCards)
-let countBlueCards = (ancientsData[wichFirstCard].firstStage.blueCards + ancientsData[wichFirstCard].secondStage.blueCards + ancientsData[wichFirstCard].thirdStage.blueCards)
-
-function countNormalCards(){
-greenNormal = countGreenCards - veryHardGreenCards.length
-browmNormal = countBrownCards - veryHardBrownCards.length
-blueNormal = countBlueCards - veryHardBlueCards.length
-}
-countNormalCards()
-
-if(greenNormal > 0){
-normalGreenOnly =  cardsDataGreen.filter(function(level) {
-    return level.difficulty !== 'easy' && level.difficulty !== 'hard';
-});
-}
-if(browmNormal > 0){
-normalBrounOnly =  cardsDataBrown.filter(function(level) {
-    return level.difficulty !== 'easy' && level.difficulty !== 'hard';
-});
-}
-if(blueNormal > 0){
-normalBlueOnly =  cardsDataBlue.filter(function(level) {
-    return level.difficulty !== 'easy' && level.difficulty !== 'hard';
-});
-}
-newCountOfNormalGreen = getRandomCards(normalGreenOnly,greenNormal)
-newCountOfNormalBrown = getRandomCards(normalBrounOnly,browmNormal)
-newCountOfNormalBlue = getRandomCards(normalBlueOnly,blueNormal)
-
-VeryHardGreenArray = veryHardGreenCards.concat(newCountOfNormalGreen);
-VeryHardBrownArray = veryHardBrownCards.concat(newCountOfNormalBrown);
-VeryHardBlueArray = veryHardBlueCards.concat(newCountOfNormalBlue);
-}
-
-   //создаю новый массив по цветам с определенным количеством карт для каждого древнего 
-function getRandomCards(sourceArray, amount) {
-    let newArray = [];
-    for (let i = 0; i < amount; i++) {
-        let rng = Math.floor(Math.random()*sourceArray.length)
-        let random = sourceArray[rng]
-        newArray.push(random);
-        sourceArray.splice(rng ,1) 
-    }
-        return newArray
-}
-let countGreenCards = (ancientsData[wichFirstCard].firstStage.greenCards + ancientsData[wichFirstCard].secondStage.greenCards + ancientsData[wichFirstCard].thirdStage.greenCards)
-let countBrownCards = (ancientsData[wichFirstCard].firstStage.brownCards + ancientsData[wichFirstCard].secondStage.brownCards + ancientsData[wichFirstCard].thirdStage.brownCards)
-let countBlueCards = (ancientsData[wichFirstCard].firstStage.blueCards + ancientsData[wichFirstCard].secondStage.blueCards + ancientsData[wichFirstCard].thirdStage.blueCards)
-
-let newGreenArray
-let newBrownArray
-let newBlueArray
-    if (levelRange == 'very-easy'){
-        newGreenArray = getRandomCards(VeryEasyGreenArray, countGreenCards)
-        newBrownArray = getRandomCards(VeryEasyBrownArray, countBrownCards)
-        newBlueArray = getRandomCards(VeryEasyBlueArray, countBlueCards)
-    }
-    if (levelRange == 'easy'){
-        newGreenArray = getRandomCards(easyGreenCards, countGreenCards)
-        newBrownArray = getRandomCards(easyBrownCards, countBrownCards)
-        newBlueArray = getRandomCards(easyBlueCards, countBlueCards)
-    }
-    if (levelRange == 'normal'){
-        newGreenArray = getRandomCards(cardsDataGreen, countGreenCards)
-        newBrownArray = getRandomCards(cardsDataBrown, countBrownCards)
-        newBlueArray = getRandomCards(cardsDataBlue, countBlueCards)
-    }
-    if (levelRange == 'hard'){
-        newGreenArray = getRandomCards(hardGreenCards, countGreenCards)
-        newBrownArray = getRandomCards(hardBrownCards, countBrownCards)
-        newBlueArray = getRandomCards(hardBlueCards, countBlueCards)
-    }
-    if (levelRange == 'very-hard'){
-        newGreenArray = getRandomCards(VeryHardGreenArray, countGreenCards)
-        newBrownArray = getRandomCards(VeryHardBrownArray, countBrownCards)
-        newBlueArray = getRandomCards(VeryHardBlueArray, countBlueCards)
-    }
-//создаю новый массив по этапам с определенным количеством карт для каждого цвета 
-
-let greenFirst = getRandomCards(newGreenArray, ancientsData[wichFirstCard].firstStage.greenCards)
-let brownFirst = getRandomCards(newBrownArray, ancientsData[wichFirstCard].firstStage.brownCards)
-let blueFirst = getRandomCards(newBlueArray, ancientsData[wichFirstCard].firstStage.blueCards)
-
-let greenSecond = getRandomCards(newGreenArray, ancientsData[wichFirstCard].secondStage.greenCards)
-let brownSecond = getRandomCards(newBrownArray, ancientsData[wichFirstCard].secondStage.brownCards)
-let blueSecond = getRandomCards(newBlueArray, ancientsData[wichFirstCard].secondStage.blueCards)
-
-let greenThird = getRandomCards(newGreenArray, ancientsData[wichFirstCard].thirdStage.greenCards)
-let brownThird = getRandomCards(newBrownArray, ancientsData[wichFirstCard].thirdStage.brownCards)
-let blueThird = getRandomCards(newBlueArray, ancientsData[wichFirstCard].thirdStage.blueCards)
-
-//складываю массивы по цветам в одном этапе
-const stageFirstArray = greenFirst.concat(brownFirst, blueFirst);
-const stageSecondtArray = greenSecond.concat(brownSecond, blueSecond);
-const stageThirdArray = greenThird.concat(brownThird, blueThird);
 
 function suffleCards(){
     dotgreen1.textContent = ancientsData[wichFirstCard].firstStage.greenCards;
@@ -320,14 +73,11 @@ function suffleCards(){
     dotblue3.textContent = ancientsData[wichFirstCard].thirdStage.blueCards;
     thirdWraper.classList.add('active-visible')
     shuffle.classList.remove('active-visible')
+    deck.classList.remove('active-hidden')
 }
 shuffle.addEventListener('click', suffleCards)
 
-function randomInteger(min, max){
-    return Math.floor((Math.random() * max));
-}
-
-//выборка карт при клике нарубашку
+  //выборка карт при клике нарубашку
 deck.addEventListener('click',() =>{
 //этап ПЕРВЫЙ
     function first(){
@@ -368,7 +118,7 @@ deck.addEventListener('click',() =>{
     }
     first()
 //этап ВТОРОЙ
-     function second(){
+    function second(){
         if(stageSecondtArray.length === 0){
             return  third();
             }
@@ -449,4 +199,228 @@ deck.addEventListener('click',() =>{
             deck.classList.add('active-hidden')
         }
 }) 
+
+let veryEasyGreenCards 
+let veryEasyBrownCards
+let veryEasyBlueCards
+
+let greenNormal
+let browmNormal
+let blueNormal
+
+let normalGreenOnly
+let normalBrounOnly
+let normalBlueOnly
+
+let newCountOfNormalGreen
+let newCountOfNormalBrown
+let newCountOfNormalBlue
+
+let VeryEasyGreenArray
+let VeryEasyBrownArray
+let VeryEasyBlueArray
+
+let stageFirstArray
+let stageSecondtArray
+let stageThirdArray
+
+function work2(){
+    console.log(`Level: ${levelRange}`)
+
+    if (levelRange == 'very-easy'){
+    veryEasyGreenCards =  greenCardsDataArr.filter(function(level) {
+        return level.difficulty == 'easy';
+    });
+    veryEasyBrownCards =  brownCardsDataArr.filter(function(level) {
+        return level.difficulty == 'easy';
+    });
+    veryEasyBlueCards =  blueCardsDataArr.filter(function(level) {
+        return level.difficulty == 'easy';
+    });
+
+    let countGreenCards = (ancientsData[wichFirstCard].firstStage.greenCards + ancientsData[wichFirstCard].secondStage.greenCards + ancientsData[wichFirstCard].thirdStage.greenCards)
+    let countBrownCards = (ancientsData[wichFirstCard].firstStage.brownCards + ancientsData[wichFirstCard].secondStage.brownCards + ancientsData[wichFirstCard].thirdStage.brownCards)
+    let countBlueCards = (ancientsData[wichFirstCard].firstStage.blueCards + ancientsData[wichFirstCard].secondStage.blueCards + ancientsData[wichFirstCard].thirdStage.blueCards)
+
+    function countNormalCards(){
+    greenNormal = countGreenCards - veryEasyGreenCards.length
+    browmNormal = countBrownCards - veryEasyBrownCards.length
+    blueNormal = countBlueCards - veryEasyBlueCards.length
+    }
+    countNormalCards()
+
+    if(greenNormal > 0){
+    normalGreenOnly =  greenCardsDataArr.filter(function(level) {
+        return level.difficulty !== 'easy' && level.difficulty !== 'hard';
+    });
+    }
+    if(browmNormal > 0){
+    normalBrounOnly =  brownCardsDataArr.filter(function(level) {
+        return level.difficulty !== 'easy' && level.difficulty !== 'hard';
+    });
+    }
+    if(blueNormal > 0){
+    normalBlueOnly =  blueCardsDataArr.filter(function(level) {
+        return level.difficulty !== 'easy' && level.difficulty !== 'hard';
+    });
+    }
+    newCountOfNormalGreen = getRandomCards(normalGreenOnly,greenNormal)
+    newCountOfNormalBrown = getRandomCards(normalBrounOnly,browmNormal)
+    newCountOfNormalBlue = getRandomCards(normalBlueOnly,blueNormal)
+
+    VeryEasyGreenArray = veryEasyGreenCards.concat(newCountOfNormalGreen);
+    VeryEasyBrownArray = veryEasyBrownCards.concat(newCountOfNormalBrown);
+    VeryEasyBlueArray = veryEasyBlueCards.concat(newCountOfNormalBlue);
+    }
+
+    let easyGreenCards
+    let easyBrownCards
+    let easyBlueCards
+    if (levelRange == 'easy'){
+        easyGreenCards =  greenCardsDataArr.filter(function(level) {
+            return level.difficulty !== 'hard';
+        });
+        easyBrownCards =  brownCardsDataArr.filter(function(level) {
+            return level.difficulty !== 'hard';
+        });
+        easyBlueCards =  blueCardsDataArr.filter(function(level) {
+            return level.difficulty !== 'hard';
+        });
+    }
+    let hardGreenCards
+    let hardBrownCards
+    let hardBlueCards
+    if (levelRange == 'hard'){
+    hardGreenCards =  greenCardsDataArr.filter(function(level) {
+        return level.difficulty !== 'easy';
+    });
+    hardBrownCards =  brownCardsDataArr.filter(function(level) {
+        return level.difficulty !== 'easy';
+    });
+    hardBlueCards =  blueCardsDataArr.filter(function(level) {
+        return level.difficulty !== 'easy';
+    });
+    }
+
+    let veryHardGreenCards
+    let veryHardBrownCards
+    let veryHardBlueCards
+
+    let VeryHardGreenArray
+    let VeryHardBrownArray
+    let VeryHardBlueArray
+
+    if (levelRange == 'very-hard'){
+
+    veryHardGreenCards =  greenCardsDataArr.filter(function(level) {
+        return level.difficulty == 'hard';
+    });
+    veryHardBrownCards =  brownCardsDataArr.filter(function(level) {
+        return level.difficulty == 'hard';
+    });
+    veryHardBlueCards =  blueCardsDataArr.filter(function(level) {
+        return level.difficulty == 'hard';
+    });
+
+    let countGreenCards = (ancientsData[wichFirstCard].firstStage.greenCards + ancientsData[wichFirstCard].secondStage.greenCards + ancientsData[wichFirstCard].thirdStage.greenCards)
+    let countBrownCards = (ancientsData[wichFirstCard].firstStage.brownCards + ancientsData[wichFirstCard].secondStage.brownCards + ancientsData[wichFirstCard].thirdStage.brownCards)
+    let countBlueCards = (ancientsData[wichFirstCard].firstStage.blueCards + ancientsData[wichFirstCard].secondStage.blueCards + ancientsData[wichFirstCard].thirdStage.blueCards)
+
+    function countNormalCards(){
+    greenNormal = countGreenCards - veryHardGreenCards.length
+    browmNormal = countBrownCards - veryHardBrownCards.length
+    blueNormal = countBlueCards - veryHardBlueCards.length
+    }
+    countNormalCards()
+
+    if(greenNormal > 0){
+    normalGreenOnly =  greenCardsDataArr.filter(function(level) {
+        return level.difficulty !== 'easy' && level.difficulty !== 'hard';
+    });
+    }
+    if(browmNormal > 0){
+    normalBrounOnly =  brownCardsDataArr.filter(function(level) {
+        return level.difficulty !== 'easy' && level.difficulty !== 'hard';
+    });
+    }
+    if(blueNormal > 0){
+    normalBlueOnly =  blueCardsDataArr.filter(function(level) {
+        return level.difficulty !== 'easy' && level.difficulty !== 'hard';
+    });
+    }
+    newCountOfNormalGreen = getRandomCards(normalGreenOnly,greenNormal)
+    newCountOfNormalBrown = getRandomCards(normalBrounOnly,browmNormal)
+    newCountOfNormalBlue = getRandomCards(normalBlueOnly,blueNormal)
+
+    VeryHardGreenArray = veryHardGreenCards.concat(newCountOfNormalGreen);
+    VeryHardBrownArray = veryHardBrownCards.concat(newCountOfNormalBrown);
+    VeryHardBlueArray = veryHardBlueCards.concat(newCountOfNormalBlue);
+    }
+
+    //создаю новый массив по цветам с определенным количеством карт для каждого древнего 
+    function getRandomCards(sourceArray, amount) {
+        let newArray = [];
+        for (let i = 0; i < amount; i++) {
+            let rng = Math.floor(Math.random()*sourceArray.length)
+            let random = sourceArray[rng]
+            newArray.push(random);
+            sourceArray.splice(rng ,1) 
+        }
+            return newArray
+    }
+    let countGreenCards = (ancientsData[wichFirstCard].firstStage.greenCards + ancientsData[wichFirstCard].secondStage.greenCards + ancientsData[wichFirstCard].thirdStage.greenCards)
+    let countBrownCards = (ancientsData[wichFirstCard].firstStage.brownCards + ancientsData[wichFirstCard].secondStage.brownCards + ancientsData[wichFirstCard].thirdStage.brownCards)
+    let countBlueCards = (ancientsData[wichFirstCard].firstStage.blueCards + ancientsData[wichFirstCard].secondStage.blueCards + ancientsData[wichFirstCard].thirdStage.blueCards)
+
+    let newGreenArray
+    let newBrownArray
+    let newBlueArray
+
+        if (levelRange == 'very-easy'){
+            newGreenArray = getRandomCards(VeryEasyGreenArray, countGreenCards)
+            newBrownArray = getRandomCards(VeryEasyBrownArray, countBrownCards)
+            newBlueArray = getRandomCards(VeryEasyBlueArray, countBlueCards)
+        }
+        if (levelRange == 'easy'){
+            newGreenArray = getRandomCards(easyGreenCards, countGreenCards)
+            newBrownArray = getRandomCards(easyBrownCards, countBrownCards)
+            newBlueArray = getRandomCards(easyBlueCards, countBlueCards)
+        }
+        if (levelRange == 'normal'){
+            newGreenArray = getRandomCards(greenCardsDataArr, countGreenCards)
+            newBrownArray = getRandomCards(brownCardsDataArr, countBrownCards)
+            newBlueArray = getRandomCards(blueCardsDataArr, countBlueCards)
+        }
+        if (levelRange == 'hard'){
+            newGreenArray = getRandomCards(hardGreenCards, countGreenCards)
+            newBrownArray = getRandomCards(hardBrownCards, countBrownCards)
+            newBlueArray = getRandomCards(hardBlueCards, countBlueCards)
+        }
+        if (levelRange == 'very-hard'){
+            newGreenArray = getRandomCards(VeryHardGreenArray, countGreenCards)
+            newBrownArray = getRandomCards(VeryHardBrownArray, countBrownCards)
+            newBlueArray = getRandomCards(VeryHardBlueArray, countBlueCards)
+        }
+    //создаю новый массив по этапам с определенным количеством карт для каждого цвета 
+
+    let greenFirst = getRandomCards(newGreenArray, ancientsData[wichFirstCard].firstStage.greenCards)
+    let brownFirst = getRandomCards(newBrownArray, ancientsData[wichFirstCard].firstStage.brownCards)
+    let blueFirst = getRandomCards(newBlueArray, ancientsData[wichFirstCard].firstStage.blueCards)
+
+    let greenSecond = getRandomCards(newGreenArray, ancientsData[wichFirstCard].secondStage.greenCards)
+    let brownSecond = getRandomCards(newBrownArray, ancientsData[wichFirstCard].secondStage.brownCards)
+    let blueSecond = getRandomCards(newBlueArray, ancientsData[wichFirstCard].secondStage.blueCards)
+
+    let greenThird = getRandomCards(newGreenArray, ancientsData[wichFirstCard].thirdStage.greenCards)
+    let brownThird = getRandomCards(newBrownArray, ancientsData[wichFirstCard].thirdStage.brownCards)
+    let blueThird = getRandomCards(newBlueArray, ancientsData[wichFirstCard].thirdStage.blueCards)
+
+    //складываю массивы по цветам в одном этапе
+     stageFirstArray = greenFirst.concat(brownFirst, blueFirst);
+     stageSecondtArray = greenSecond.concat(brownSecond, blueSecond);
+     stageThirdArray = greenThird.concat(brownThird, blueThird);
 }
+
+function randomInteger(min, max){
+        return Math.floor((Math.random() * max));
+    }
